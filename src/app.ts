@@ -4,7 +4,7 @@ import projectRoute from './routes/project'
 import employeeRoute from './routes/employee'
 
 const app = express();
-const port = process.env.Port || 8989
+const port = process.env.PORT || 8989
 mongoose.connect('mongodb+srv://nikhil:nikhil@cluster0.mftgu.mongodb.net/pmp')
 mongoose.Promise = global.Promise;
 
