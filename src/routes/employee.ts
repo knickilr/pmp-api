@@ -9,7 +9,7 @@ router.get('/', async (req: Request, res:Response)=>{
         const emp = await Employee.find()
         res.status(200).json(emp)
    } catch(err){
-       console.log(err)
+        return res.status(500).json(err);
    }
 })
 
@@ -20,7 +20,7 @@ router.get('/:empId', async (req: Request, res: Response)=>{
         res.status(200).json(emp)
     }
     catch(err){
-        console.log(err)
+        return res.status(500).json(err);
     }
 })
 
@@ -34,16 +34,15 @@ router.post('/', async (req: Request, res: Response)=>{
         const emp = await employee.save()
         res.status(200).json(emp)
     } catch(err){
-        console.log(err)
+        return res.status(500).json(err);
     }
 })
 
 //update the employee
-router.put("/:empId", async(req: Request, res: Response) =>{
-
-    if(req.params.empId){
+router.put("/:_id", async(req: Request, res: Response) =>{
+    if(req.params._id){
         try{
-            const empl = await Employee.findByIdAndUpdate(req.params.empId as any, {$set: req.body})
+            const empl = await Employee.findByIdAndUpdate({_id: req.params._id}, {$set: {fName:req.body.fName}})
             res.status(200).json(empl)
         } catch(err){
             return res.status(500).json(err);

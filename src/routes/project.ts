@@ -9,7 +9,7 @@ router.get('/', async (req: Request, res:Response)=>{
          const proj = await Project.find()
          res.status(200).json(proj)
     } catch(err){
-        console.log(err)
+        return res.status(500).json(err);
     }
 })
 
@@ -20,7 +20,7 @@ router.get('/:id', async (req: Request, res:Response)=>{
         res.status(200).json(proj)
     }
     catch(err){
-        console.log(err)
+        return res.status(500).json(err);
     }
 })
 
@@ -31,20 +31,20 @@ router.post('/', async(req: Request, res:Response)=>{
         await proj.save()
         res.status(200).json(proj)
     } catch(err){
-        console.log(err)
+        return res.status(500).json(err);
     }
 
 })
 
 //update the given project
-router.put("/:id", async(req: Request, res:Response)=>{
+router.put("/:_id", async(req: Request, res:Response)=>{
     try{
-        if(req.params.id){
-            const proj = await Project.findOneAndUpdate(req.params.id  as any, {$set: req.body})
-            res.status(200).json("Project is updated")
+        if(req.params._id){
+            const proj = await Project.findByIdAndUpdate({_id: req.params._id}, {$set: {name:req.body.name, description:req.body.description, sDate:req.body.sDate, employee:req.body.employee}})
+            res.status(200).json(proj)
         }
     }catch(err){
-        console.log(err)
+        return res.status(500).json(err);
     }
 })
 
